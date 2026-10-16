@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#081221" />
+  <meta name="theme-color" content="#f5f9ff" />
   <meta name="description" content="Explore the German electricity market: day-ahead power prices, negative-price hours, renewable energy, price volatility and transparent AI forecasting. Open-source Python project by Hope Intelligence." />
   <meta name="keywords" content="German electricity prices, Strompreise, Energiemarkt, Strommarktanalyse, Energy Intelligence, day-ahead market, negative electricity prices, power price forecasting, Energiewirtschaft, energy analytics, Python, Machine Learning, SMARD, Bundesnetzagentur, renewable energy, wind energy, solar PV, GitHub" />
   <meta name="author" content="Hope Intelligence" />
@@ -12,26 +12,32 @@
   <meta property="og:site_name" content="Energy Intelligence" />
   <meta property="og:title" content="Energy Intelligence | German Electricity Market Analytics" />
   <meta property="og:description" content="Explore authentic SMARD electricity market data, renewable energy, negative-price hours and transparent machine learning forecasts." />
-  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="og:image" content="https://omid-fard.github.io/energy-intelligence/assets/renewable-energy-hero.webp" />
+  <meta name="twitter:image" content="https://omid-fard.github.io/energy-intelligence/assets/renewable-energy-hero.webp" />
   <!-- SITE_URL_METADATA -->
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Energy Intelligence","description":"Open-source German electricity-market data analytics and research forecasting with Bundesnetzagentur SMARD datasets.","applicationCategory":"BusinessApplication","operatingSystem":"Web","inLanguage":["de","en"],"isAccessibleForFree":true,"creator":{"@type":"Organization","name":"Hope Intelligence"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Energy Intelligence","description":"Open-source German electricity-market data analytics and research forecasting with Bundesnetzagentur SMARD datasets.","applicationCategory":"BusinessApplication","operatingSystem":"Web","inLanguage":["de","en"],"isAccessibleForFree":true,"creator":{"@type":"Organization","name":"Hope Intelligence","url":"https://omidfard.de/"}}</script>
   <title>Energy Intelligence | German Electricity Prices & Power Market Analytics</title>
   <link rel="stylesheet" href="./style.css" />
   <script src="./app.js" defer></script>
 </head>
 <body>
  <header class="sitebar">
-  <a class="logo" href="#home" aria-label="Energy Intelligence home"><span class="logoicon">E<span class="pulse">✦</span></span><span class="brand">ENERGY <strong>INTELLIGENCE</strong><small>BY HOPE INTELLIGENCE</small></span></a>
-  <div class="topright"><span class="toplabel" data-i18n="platform">ENERGY MARKET INTELLIGENCE</span><button id="language" type="button" aria-label="Change language">EN</button><a class="ghostlink" href="#approach" data-i18n="howitworks">Methodik ↗</a></div>
+  <div class="bar-inner container">
+   <a class="logo" href="#home" aria-label="Energy Intelligence home"><span class="logoicon" aria-hidden="true">⚡</span><span class="brand">ENERGY <strong>INTELLIGENCE</strong><small>BY HOPE INTELLIGENCE</small></span></a>
+   <nav class="topnav" aria-label="Main navigation"><a href="#dashboard" data-i18n="navDashboard">Dashboard</a><a href="#industry" data-i18n="navIndustry">Energy analytics</a><a href="#approach" data-i18n="navApproach">Methodology</a></nav>
+   <div class="topright"><div class="language-switch" aria-label="Language"><span id="lang-current" class="lang-active">DE</span><span class="lang-separator" aria-hidden="true">/</span><button id="language" type="button" aria-label="Switch language">EN</button></div><a class="portfolioLink" href="https://omidfard.de/" target="_blank" rel="noopener noreferrer" aria-label="OmidFard.de website"><span>omidfard.de</span> ↗</a></div>
+  </div>
  </header>
  <main id="home">
-  <section class="hero container">
-   <div class="herobody"><div class="eyebrow"><span class="eyedot"></span><span data-i18n="heroEyebrow">DATEN AUS DEUTSCHLAND · ÖFFENTLICHE QUELLE</span></div>
-    <h1 data-i18n="heroTitle">Strommarkt.<br><span>Intelligent analysiert.</span></h1>
-    <p class="heroDescription" data-i18n="heroDescription">Transparente Marktanalysen und stündliche Strompreis-Prognosen — mit Daten der Bundesnetzagentur und nachvollziehbarer Modellbewertung.</p>
-    <div class="heroActions"><a class="primarylink" href="#dashboard"><span data-i18n="explore">Dashboard ansehen</span> <span aria-hidden="true">↗</span></a><a class="textlink" href="https://www.smard.de/" target="_blank" rel="noopener"><span data-i18n="source">Offizielle Datenquelle</span> ↗</a></div>
+  <section class="hero container" aria-labelledby="hero-heading">
+   <div class="herobody"><div class="eyebrow"><span class="eyedot"></span><span data-i18n="heroEyebrow">ENERGIEDATEN AUS DEUTSCHLAND · ÖFFENTLICHE QUELLEN</span></div>
+    <h1 id="hero-heading" data-i18n="heroTitle">Energie verstehen.<br><span>Märkte intelligent analysieren.</span></h1>
+    <p class="heroDescription" data-i18n="heroDescription">Strommarktanalyse und transparente Preisprognosen – mit realen Daten der Bundesnetzagentur und nachvollziehbaren Modellen.</p>
+    <div class="heroActions"><a class="primarylink" href="#dashboard"><span data-i18n="explore">Dashboard ansehen</span> <span aria-hidden="true">↗</span></a><a class="textlink" href="https://www.smard.de/" target="_blank" rel="noopener noreferrer"><span data-i18n="source">Offizielle Datenquelle</span> ↗</a></div>
+    <div class="heroChips" aria-label="Project technology"><span>⚡ Energy analytics</span><span>◉ SMARD data</span><span>⌁ Python &amp; ML</span></div>
    </div>
-   <div class="heroGraphic" aria-hidden="true"><div class="glow"></div><div class="planet"></div><div class="orbital ring1"></div><div class="orbital ring2"></div><div class="spark s1"></div><div class="spark s2"></div><div class="spark s3"></div><div class="graphictag">SMARTER ENERGY<br><strong>BETTER DECISIONS.</strong></div></div>
+   <div class="heroVisual"><img src="./assets/renewable-energy-hero.webp" alt="Wind turbines and solar panels near a German energy grid at sunset" width="1113" height="891" fetchpriority="high"/><div class="imageCaption"><span class="imageCaptionDot"></span><span data-i18n="photoCaption">WIND · SOLAR · STROMNETZE</span></div></div>
   </section>
   <section class="container dataarea" id="dashboard">
     <div class="sectionHeader"><div><div class="subhead" data-i18n="overview">MARKTÜBERSICHT</div><h2 data-i18n="dashboard">Deutschland im Überblick</h2></div><div id="status" class="status">● <span data-i18n="loading">Lade Daten …</span></div></div>
@@ -50,7 +56,7 @@
       <p class="caution" data-i18n="caution">Prognosen sind Modellschätzungen, keine garantierten Preise oder Handlungsempfehlungen.</p>
      </div>
     </div>
-    <section class="businessInsights" aria-labelledby="business-insights-heading">
+    <section id="industry" class="businessInsights" aria-labelledby="business-insights-heading">
      <div class="sectionHeader"><div><div class="subhead" data-i18n="industryTag">INDUSTRY INSIGHTS</div><h2 id="business-insights-heading" data-i18n="industryTitle">Market signals for energy teams</h2></div></div>
      <div class="businessMetrics">
       <article class="panel"><div class="stattitle" data-i18n="negativeLabel">Negative-price hours · 7d</div><div class="businessNumber" id="negative-hours">—</div><p data-i18n="negativeHelp">Hours with wholesale price below zero (historical, not a prediction).</p></article>
@@ -68,6 +74,6 @@
    <div class="methods"><article><div class="methodicon">01 <span>↗</span></div><h3 data-i18n="oneTitle">Datenpipeline</h3><p data-i18n="oneText">Automatischer Abruf öffentlicher SMARD-Zeitreihen mit Qualitätskontrollen und SQL-Verarbeitung.</p><div class="techline">PYTHON · SQLITE</div></article><article><div class="methodicon">02 <span>⌁</span></div><h3 data-i18n="twoTitle">Marktanalyse</h3><p data-i18n="twoText">Historische Preis-, Wind-, Solar- und Verbrauchsdaten übersichtlich vergleichen.</p><div class="techline">ANALYTICS · WEB</div></article><article><div class="methodicon">03 <span>✳</span></div><h3 data-i18n="threeTitle">Prognosemodelle</h3><p data-i18n="threeText">Machine Learning mit zeitlicher Validierung und transparentem Vergleich mit einfachen Baselines.</p><div class="techline">SCIKIT-LEARN · ML</div></article><article><div class="methodicon">04 <span>◎</span></div><h3 data-i18n="fourTitle">Öffentliche Website</h3><p data-i18n="fourText">Zweisprachiges Dashboard, automatisch aktualisiert und ohne eigenen Server veröffentlicht.</p><div class="techline">GITHUB ACTIONS · PAGES</div></article></div>
   </section>
  </main>
- <footer><div class="container footerinner"><div class="logofoot">ENERGY <strong>INTELLIGENCE</strong><small data-i18n="footerTag">Data Analytics · AI · Automation</small></div><div class="footertext"><p data-i18n="disclaimer">Demonstrations- und Forschungsprojekt. Kein Echtzeit-Handelssystem.</p><p><a id="source-code-link" href="#" target="_blank" rel="noopener" data-i18n="sourceCode">Source code ↗</a> · Data: <a href="https://www.smard.de/home/datennutzung" target="_blank" rel="noopener">Bundesnetzagentur | SMARD.de</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>. <span data-i18n="adapted">Daten aggregiert und analysiert.</span></p></div></div></footer>
+ <footer><div class="container footerinner"><div class="logofoot">ENERGY <strong>INTELLIGENCE</strong><small data-i18n="footerTag">By Hope Intelligence</small><a class="footPortfolio" href="https://omidfard.de/" target="_blank" rel="noopener noreferrer">omidfard.de ↗</a></div><div class="footertext"><p data-i18n="disclaimer">Demonstrations- und Forschungsprojekt. Kein Echtzeit-Handelssystem.</p><p><a id="source-code-link" href="#" target="_blank" rel="noopener" data-i18n="sourceCode">Source code ↗</a> · Data: <a href="https://www.smard.de/home/datennutzung" target="_blank" rel="noopener">Bundesnetzagentur | SMARD.de</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>. <span data-i18n="adapted">Daten aggregiert und analysiert.</span></p></div></div></footer>
 </body>
 </html>
