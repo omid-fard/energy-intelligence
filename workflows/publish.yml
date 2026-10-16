@@ -1,0 +1,53 @@
+name: Energy Intelligence - Refresh & Publish
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '23 */6 * * *'
+  workflow_dispatch:
+
+# Pages-only privileges; no write permission to repository contents.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout public repository
+        uses: actions/checkout@v4
+      - name: Configure Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install locked-range dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -v
+      - name: Validate dashboard JavaScript syntax
+        run: node --check docs/app.js
+      - name: Fetch authentic SMARD market data and calculate honest model results
+        run: python -m src.build
+      - name: Generate canonical URL, robots and sitemap
+        run: python -m src.site_meta
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload generated public website
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: ./docs
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
