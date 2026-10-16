@@ -1,4 +1,5 @@
 # Energy Intelligence ⚡
+![Energy Intelligence Banner](docs/assets/energy_intelligence_wave_banner.png)
 
 **German Electricity Market Analytics · Negative Power Prices · Renewable Energy · Transparent ML Forecasting**
 
