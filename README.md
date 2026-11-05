@@ -39,8 +39,8 @@ There is **no continuously running backend**, no persistent production database 
 1. Create a public GitHub repository named `energy-intelligence` using the `main` branch.
 2. Unzip the release and upload **all of its contents**, including the hidden `.github` directory. Do not upload the ZIP as one file.
 3. Set **Settings → Pages → Source: GitHub Actions**.
-4. Run **Actions → Energy Intelligence - Refresh & Publish → Run workflow**. It will fetch actual SMARD data, run tests and publish the website. A failure prevents publishing an invented/fake dataset.
-5. After the workflow succeeds, use the real Pages URL provided in Settings → Pages. Visit the site and confirm its freshness timestamp and data source before sharing.
+4. Run **Actions → Energy Intelligence - Refresh & Publish → Run workflow**. It runs tests and attempts to fetch genuine SMARD data. If the external source fails, it still deploys a clearly marked **source_unavailable** dashboard, or a **cached_stale** dashboard using only authentic previously fetched observations. No synthetic production data is published.
+5. After the workflow succeeds, use the actual Pages URL from Settings → Pages. **A green workflow does not guarantee fresh market data**: inspect `docs/data/dashboard.json` in the deployed site and verify `metadata.status == 'live'`, `metadata.latest_price_timestamp` and region attribution before describing the dashboard as current. The checked-in source JSON remains a deliberately empty placeholder.
 6. Add the public link to the repository **About → Website** and publish your company-page announcement with **both live-demo and GitHub source links**.
 7. In **About → Topics**, paste the relevant topic keywords from [`GITHUB_LINKEDIN_KEYWORDS.md`](GITHUB_LINKEDIN_KEYWORDS.md).
 
@@ -81,13 +81,13 @@ German electricity market / SMARD API (real time series, hourly aggregation)
 ## Market data and limitations
 
 - **Source:** [Bundesnetzagentur | SMARD.de](https://www.smard.de/)
-- **Data reuse:** [CC BY 4.0 and attribution](https://www.smard.de/home/datennutzung) — data license is separate from the MIT license covering code.
+- **Important wholesale-price reuse warning (Nov 2026):** [SMARD data-use guidance](https://www.smard.de/home/datennutzung) states wholesale electricity prices should **not be reused until further notice** while HEDWIG licensing questions are being reviewed. Other market data generally use CC BY 4.0 with attribution. **Do not assume wholesale prices may legally be republished just because the API is public; obtain clarification/permission before enabling public use.** The software MIT license does not license SMARD datasets.
 - **Market:** DE/LU day-ahead wholesale electricity prices (with fallback to a SMARD `DE` series only if available and clearly disclosed); solar/onshore wind/grid load are `DE` series.
 - **Time series used:** `hour` from SMARD; **EU day-ahead trading moved to 15-minute intervals on 30 September 2025**. Hourly market charts here are **not** a 15-minute trading product.
 - **Units:** EUR/MWh for prices, MWh per hourly interval for energy series.
 - **Not included:** household retail tariffs, taxes, grid fees, transmission constraints, imbalance charges, weather forecast inputs, full historical provenance/version snapshots, guaranteed cost reductions, industrial production schedules.
-- **Freshness:** the browser compares the latest actual SMARD observation timestamp with the *current* time; old data is flagged even when CI stops running.
-- **License:** [MIT (software)](LICENSE); **CC BY 4.0 (SMARD datasets)**.
+- **Freshness:** the browser compares the latest actual SMARD observation timestamp with the *current* time. Transient outages publish `cached_stale` data from the most recent successful GitHub Actions cache (if any), disabling outdated forecasts; without a cache, the dashboard explicitly shows `source_unavailable`.
+- **License:** [MIT (software)](LICENSE). SMARD licensing is dataset-specific; wholesale prices are subject to the reuse advisory above.
 
 ## Local verification (optional)
 
