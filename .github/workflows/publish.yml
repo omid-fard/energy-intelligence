@@ -45,8 +45,30 @@ jobs:
       - name: Validate dashboard JavaScript syntax
         run: node --check docs/app.js
 
+      # The cache stores only a verified successful build of genuine SMARD data.
+      # A transient source outage can then show historical data marked as stale.
+      - name: Restore latest authentic market-data cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .cache/dashboard.json
+          key: smard-live-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            smard-live-
+
       - name: Fetch SMARD data and calculate forecasts
+        id: refresh
         run: python -m src.build
+
+      - name: Save fresh authentic market-data cache
+        if: steps.refresh.outputs.fresh == 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: .cache/dashboard.json
+          key: smard-live-${{ github.run_id }}-${{ github.run_attempt }}
+
+      - name: Explain source availability status
+        if: steps.refresh.outputs.fresh != 'true'
+        run: echo 'SMARD unavailable - Pages will show explicitly stale or unavailable data; no synthetic values published.'
 
       - name: Generate website metadata
         run: python -m src.site_meta

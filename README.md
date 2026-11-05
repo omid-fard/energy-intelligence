@@ -34,7 +34,7 @@ There is **no continuously running backend**, no persistent production database 
 
 ## Quick deployment — no local IDE or terminal
 
-**Follow [`START_HERE_FA.md`](START_HERE_FA.md) for the step-by-step Persian guide.**
+**Follow [`START_HERE.md`](START_HERE.md) for the English-only, step-by-step deployment guide.**
 
 1. Create a public GitHub repository named `energy-intelligence` using the `main` branch.
 2. Unzip the release and upload **all of its contents**, including the hidden `.github` directory. Do not upload the ZIP as one file.
@@ -110,7 +110,7 @@ src/site_meta.py                Canonical URL, robots, sitemap
 /tests/                         Deterministic unit tests
 GITHUB_LINKEDIN_KEYWORDS.md     Search terms + ready-to-paste GitHub settings
 LINKEDIN_LAUNCH_COPY.md         Honest English/German company launch posts
-AUDIT_REPORT_FA.md              Code audit, remaining gaps and B2B roadmap
+AUDIT_REPORT.md                 Code audit, remaining gaps and B2B roadmap
 ```
 
 ## Business roadmap
