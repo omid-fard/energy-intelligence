@@ -19,9 +19,11 @@ REGION = 'DE'
 PRICE_REGIONS = ('DE-LU', 'DE')
 RESOLUTION = 'hour'
 MAX_RESPONSE_BYTES = 8 * 1024 * 1024
+REQUEST_TIMEOUT_SECONDS = 12
+MAX_CONSECUTIVE_WINDOW_FAILURES = 6
 
 
-def get_json(url: str, attempts: int = 3) -> dict:
+def get_json(url: str, attempts: int = 2) -> dict:
     """Download a JSON object, retrying temporary HTTP and invalid-body failures."""
     if attempts < 1:
         raise ValueError('attempts must be at least 1')
@@ -42,7 +44,7 @@ def get_json(url: str, attempts: int = 3) -> dict:
     for attempt in range(1, attempts + 1):
         try:
             request = Request(url, headers=headers)
-            with urlopen(request, timeout=30) as response:
+            with urlopen(request, timeout=REQUEST_TIMEOUT_SECONDS) as response:
                 content_type = response.headers.get('Content-Type', 'unknown')
                 body = response.read(MAX_RESPONSE_BYTES + 1)
 
@@ -139,21 +141,32 @@ def fetch_metric(
     selection = valid_stamps[-weeks:]
     records: dict[int, float] = {}
     successful_windows = 0
+    consecutive_failures = 0
 
-    for stamp in selection:
+    # Read the newest windows first. When a provider blocks every response,
+    # avoid retrying all historical windows and overrunning GitHub's job limit.
+    for stamp in reversed(selection):
         url = (
             f'{BASE}/{filter_id}/{region}/'
             f'{filter_id}_{region}_{RESOLUTION}_{stamp}.json'
         )
         try:
             series = parse_series(get_json(url))
-            if series:
-                records.update(series)
-                successful_windows += 1
-            else:
-                print(f'WARN SMARD empty window: {url}', flush=True)
+            if not series:
+                raise ValueError('Empty series')
+            for ts, value in series:
+                records.setdefault(ts, value)  # newest weekly window takes precedence
+            successful_windows += 1
+            consecutive_failures = 0
         except (RuntimeError, ValueError) as exc:
+            consecutive_failures += 1
             print(f'WARN skipping SMARD window: {url} | {exc}', flush=True)
+            if consecutive_failures >= MAX_CONSECUTIVE_WINDOW_FAILURES:
+                print(
+                    'WARN stopping this region after consecutive failed windows',
+                    flush=True,
+                )
+                break
 
     minimum = min(4, len(selection))
     if successful_windows < minimum:
