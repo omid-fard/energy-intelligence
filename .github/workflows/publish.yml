@@ -10,6 +10,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
   pages: write
   id-token: write
 
@@ -45,8 +46,6 @@ jobs:
       - name: Validate dashboard JavaScript syntax
         run: node --check docs/app.js
 
-      # The cache stores only a verified successful build of genuine SMARD data.
-      # A transient source outage can then show historical data marked as stale.
       - name: Restore latest authentic market-data cache
         uses: actions/cache/restore@v4
         with:
@@ -68,7 +67,8 @@ jobs:
 
       - name: Explain source availability status
         if: steps.refresh.outputs.fresh != 'true'
-        run: echo 'SMARD unavailable - Pages will show explicitly stale or unavailable data; no synthetic values published.'
+        run: |
+          echo "SMARD unavailable - Pages will show explicitly stale or unavailable data; no synthetic values published."
 
       - name: Generate website metadata
         run: python -m src.site_meta
@@ -81,6 +81,14 @@ jobs:
         with:
           path: ./docs
 
+      - name: Wait for artifact availability
+        shell: bash
+        run: |
+          echo "Waiting for GitHub Pages artifact..."
+          sleep 30
+
       - name: Deploy website
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages
